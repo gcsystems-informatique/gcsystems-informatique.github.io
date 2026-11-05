@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mon appareil — GCSystems</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#5B63F5;--brand-dark:#3d44cc;--brand-light:#7b82f8;--green:#4dffa0;--bg:#0d0f2b;--card:rgba(255,255,255,.07);--line:rgba(255,255,255,.16);--muted:rgba(255,255,255,.6)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;color:#fff;min-height:100vh;padding:0 5% 60px;
+  background:radial-gradient(900px 500px at 15% -10%,rgba(91,99,245,.45),transparent 60%),radial-gradient(700px 500px at 100% 10%,rgba(77,255,160,.12),transparent 60%),var(--bg)}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;max-width:1100px;margin:0 auto;padding:26px 0}
+.brand{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:24px;letter-spacing:.5px}
+.brand span{color:var(--brand-light)}
+.badge{display:inline-flex;align-items:center;gap:8px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--green);background:rgba(77,255,160,.12);border:1px solid rgba(77,255,160,.4);padding:6px 14px;border-radius:6px}
+.badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.back{color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:10px 18px;border:1.5px solid var(--line);border-radius:10px;background:rgba(255,255,255,.06);transition:background .2s,color .2s}
+.back:hover{background:#fff;color:var(--brand-dark)}
+main{max-width:1100px;margin:0 auto}
+h1{font-family:'Rajdhani',sans-serif;font-size:clamp(32px,5vw,48px);line-height:1.1;margin:10px 0 8px}
+.lead{color:var(--muted);margin-bottom:30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:26px;backdrop-filter:blur(8px)}
+.card h2{font-family:'Rajdhani',sans-serif;font-size:20px;letter-spacing:1px;text-transform:uppercase;color:var(--brand-light);margin-bottom:16px}
+dl{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;font-size:14px}
+dt{color:var(--muted)}dd{text-align:right;font-weight:600;word-break:break-word}
+.dl-card{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:20px;padding:22px 26px;border-radius:20px;background:linear-gradient(135deg,rgba(77,255,160,.14),rgba(91,99,245,.18));border:1.5px solid rgba(77,255,160,.35)}
+.dl-card h2{font-family:'Rajdhani',sans-serif;font-size:22px;letter-spacing:.5px;margin-bottom:2px}
+.dl-card p{color:var(--muted);font-size:13.5px}
+.dl-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:12px;text-decoration:none;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;text-transform:uppercase;color:#0f2a1e;background:linear-gradient(135deg,#00c864,var(--green));box-shadow:0 6px 24px rgba(0,200,100,.35);transition:filter .2s,transform .15s}
+.dl-btn:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.actions{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+button.b{padding:13px 24px;border:0;border-radius:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--brand-dark),var(--brand));transition:filter .2s,transform .15s}
+button.b:hover{filter:brightness(1.15);transform:translateY(-1px)}
+@media(max-width:520px){.card{padding:20px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">GC<span>Systems</span></div>
+  <span class="badge">Mode administrateur</span>
+  <a class="back" href="index.html">← Retour au site</a>
+</header>
+
+<main>
+  <h1>Mon appareil</h1>
+  <p class="lead">Les caractéristiques de cette machine, telles que ton navigateur les communique. Rien n'est envoyé nulle part.</p>
+  <div class="dl-card">
+    <div>
+      <h2>Outil de configuration</h2>
+      <p>pack_conf.exe · 0,4 Mo · pour Windows</p>
+    </div>
+    <a class="dl-btn" href="pack_conf.exe" download="pack_conf.exe">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+      Télécharger l'outil de configuration
+    </a>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="actions"><button class="b" id="copy" type="button">Copier le rapport</button></div>
+</main>
+
+<script>
+(function(){
+  var n=navigator,ua=n.userAgent,c=n.connection||{},$=function(i){return document.getElementById(i)};
+  var NA='non communiqué';
+
+  function browser(){
+    var m;
+    if((m=ua.match(/Edg\/(\d+)/)))return 'Edge '+m[1];
+    if((m=ua.match(/OPR\/(\d+)/)))return 'Opera '+m[1];
+    if((m=ua.match(/Firefox\/(\d+)/)))return 'Firefox '+m[1];
+    if((m=ua.match(/(?:Chrome|CriOS)\/(\d+)/)))return 'Chrome '+m[1];
+    if((m=ua.match(/Version\/(\d+).*Safari/)))return 'Safari '+m[1];
+    return 'Inconnu';
+  }
+  function os(){
+    var m;
+    if(/Windows NT 10/.test(ua))return 'Windows 10 / 11';
+    if(/Windows/.test(ua))return 'Windows';
+    if((m=ua.match(/Android ([\d.]+)/)))return 'Android '+m[1];
+    if((m=ua.match(/OS (\d+)[_\d]* like Mac/)))return 'iOS '+m[1];
+    if(/Mac OS X/.test(ua))return 'macOS';
+    if(/CrOS/.test(ua))return 'ChromeOS';
+    if(/Linux/.test(ua))return 'Linux';
+    return (n.userAgentData&&n.userAgentData.platform)||n.platform||'Inconnu';
+  }
+  function kind(){
+    if(/iPad|Tablet/.test(ua)||(/Android/.test(ua)&&!/Mobile/.test(ua)))return 'Tablette';
+    if(/Mobi|iPhone|Android/.test(ua))return 'Téléphone';
+    return 'Ordinateur';
+  }
+  function gpu(){
+    try{
+      var cv=document.createElement('canvas'),gl=cv.getContext('webgl')||cv.getContext('experimental-webgl'),e=gl.getExtension('WEBGL_debug_renderer_info');
+      return gl.getParameter(e.UNMASKED_RENDERER_WEBGL)||NA;
+    }catch(e){return NA}
+  }
+  function mq(q){return window.matchMedia&&matchMedia(q).matches}
+  function go(b){return (b/1e9).toFixed(b>=1e11?0:1)+' Go'}
+
+  var pending={};
+  var sections=[
+    ['Système',[
+      ['Type d\'appareil',kind()],
+      ['Système',os()],
+      ['Navigateur',browser()],
+      ['Langue',n.language||'—'],
+      ['Fuseau horaire',Intl.DateTimeFormat().resolvedOptions().timeZone||'—']
+    ]],
+    ['Matériel',[
+      ['Cœurs processeur',n.hardwareConcurrency||NA],
+      ['Mémoire (approx.)',n.deviceMemory?'≥ '+n.deviceMemory+' Go':NA],
+      ['Carte graphique',gpu()],
+      ['Écran tactile',n.maxTouchPoints>0?'Oui ('+n.maxTouchPoints+' points)':'Non'],
+      ['Batterie','…','battery']
+    ]],
+    ['Écran',[
+      ['Résolution',screen.width+' × '+screen.height+' px'],
+      ['Fenêtre',innerWidth+' × '+innerHeight+' px'],
+      ['Densité de pixels',(devicePixelRatio||1)+'x'],
+      ['Profondeur de couleur',screen.colorDepth+' bits'],
+      ['Thème préféré',mq('(prefers-color-scheme: dark)')?'Sombre':'Clair']
+    ]],
+    ['Réseau & stockage',[
+      ['En ligne',n.onLine?'Oui':'Non'],
+      ['Type de connexion',c.effectiveType?c.effectiveType.toUpperCase():NA],
+      ['Débit estimé',c.downlink?'~'+c.downlink+' Mb/s':NA],
+      ['Latence',c.rtt?c.rtt+' ms':NA],
+      ['Stockage disponible','…','storage']
+    ]]
+  ];
+
+  var grid=$('grid');
+  sections.forEach(function(s){
+    var card=document.createElement('section'),h=document.createElement('h2'),dl=document.createElement('dl');
+    card.className='card';h.textContent=s[0];card.appendChild(h);card.appendChild(dl);grid.appendChild(card);
+    s[1].forEach(function(r){
+      var dt=document.createElement('dt'),dd=document.createElement('dd');
+      dt.textContent=r[0];dd.textContent=r[1];dl.appendChild(dt);dl.appendChild(dd);
+      if(r[2])pending[r[2]]=dd;
+    });
+  });
+
+  /* valeurs asynchrones */
+  if(n.getBattery){
+    n.getBattery().then(function(b){pending.battery.textContent=Math.round(b.level*100)+' %'+(b.charging?' (en charge)':'')},function(){pending.battery.textContent=NA});
+  }else pending.battery.textContent=NA;
+  if(n.storage&&n.storage.estimate){
+    n.storage.estimate().then(function(e){pending.storage.textContent=e.quota?go(e.quota)+' (quota navigateur)':NA},function(){pending.storage.textContent=NA});
+  }else pending.storage.textContent=NA;
+
+  /* copier le rapport */
+  $('copy').addEventListener('click',function(){
+    var b=this,t='Rapport appareil — GCSystems\n';
+    document.querySelectorAll('.card').forEach(function(card){
+      t+='\n'+card.querySelector('h2').textContent.toUpperCase()+'\n';
+      var dts=card.querySelectorAll('dt'),dds=card.querySelectorAll('dd');
+      for(var i=0;i<dts.length;i++)t+='- '+dts[i].textContent+' : '+dds[i].textContent+'\n';
+    });
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){b.textContent='Copié ✓';setTimeout(function(){b.textContent='Copier le rapport'},1400)},function(){});
+    }
+  });
+})();
+</script>
+</body>
+</html>
